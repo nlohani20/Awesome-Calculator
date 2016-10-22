@@ -1,0 +1,10 @@
+#calculatorbody {width:300px;height:500px; background: linear-gradient(#648880, #293f50); padding:10px; border-radius:5px;text-align:center}
+
+#calculatorbody input[type="button"] {width:50px;height:50px;margin:10px;font-size:18px;background: radial-gradient(#648880, #293f50);
+  border-radius: 5px; color:white}
+
+#calculatorbody input[type="text"] {height:70px;width:100%;margin:10px, auto;font-size:26px; text-align:right;padding:5px}
+
+#calculatorbody #showbt {width:180px}
+
+#calculatorbody #button0 {width:120px} 

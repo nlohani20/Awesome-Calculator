@@ -1,5 +1,6 @@
 <html>
     <head>
+	<link rel="stylesheet" type="text/css" href="Styles/style.css">
 	<script src="jquery-3.1.1.js"></script>
 	<script>
 	var operandstack = [];
@@ -232,36 +233,61 @@
 		//Display currently stored values
 		document.getElementById("showbt").onclick = function(){
 			var storedvalues = window.sessionStorage.getItem("StoredValues").split(",");
-			alert("Total values stored "+storedvalues.length + ": " + storedvalues);
+			if(storedvalues)
+			{
+				alert("Total Values Stored - "+storedvalues.length + ": " + storedvalues);
+			}
+			else
+			{
+				alert("No values stored.")
+			}
 		}			
 	}
 	
 	</script>
     </head>
     <body>
+		<!--I would normally place all styles in a seperate CSS file-->
         <h1>Calculator</h1>
-		<input type="button" id="showbt" value="Show Stored Values"/>
-		<div><input type="text" id="valuetext" /></div>
-		<input type="button" id="button0" value="0"/>
-		<input type="button" id="decimalbt" value="."/>		
-		<input type="button" id="evaluatebt" value="="/>		
-		<input type="button" id="clearbt" value="CE"/>	
-		<div><input type="button" id="button1" value="1"/>	
-		<input type="button" id="button2" value="2"/>	
-		<input type="button" id="button3" value="3"/></div>		
-		<div><input type="button" id="button4" value="4"/>	
-		<input type="button" id="button5" value="5"/>	
-		<input type="button" id="button6" value="6"/></div>		
-		<div><input type="button" id="button7" value="7"/>
-		<input type="button" id="button8" value="8"/>	
-		<input type="button" id="button9" value="9"/></div>	
-		<div>
-		<input type="button" id="addbt" value="+"/>
-		<input type="button" id="subtractbt" value="-"/>
-		<input type="button" id="multiplybt" value="*"/>
-		<input type="button" id="dividebt" value="/"/>
-		<input type="button" id="expbt" value="^"/>
-		<input type="button" id="sqrtbt" value="sqrt"/>
+		<div id="calculatorbody">
+		
+			<div><input type="text" id="valuetext" /></div>
+						
+			<div>				
+				<input type="button" id="clearbt" value="CE"/>	
+				<input type="button" id="expbt" value="^"/>
+				<input type="button" id="sqrtbt" value="sqrt"/>
+				<input type="button" id="dividebt" value="/"/>
+			</div>
+			
+			<div>
+				<input type="button" id="button7" value="7"/>
+				<input type="button" id="button8" value="8"/>	
+				<input type="button" id="button9" value="9"/>
+				<input type="button" id="multiplybt" value="*"/>
+			</div>
+			
+			<div>
+				<input type="button" id="button4" value="4"/>	
+				<input type="button" id="button5" value="5"/>	
+				<input type="button" id="button6" value="6"/>
+				<input type="button" id="subtractbt" value="-"/>
+			</div>	
+			
+			<div>
+				<input type="button" id="button1" value="1"/>	
+				<input type="button" id="button2" value="2"/>	
+				<input type="button" id="button3" value="3"/>
+				<input type="button" id="addbt" value="+"/>			
+			</div>	
+			
+			<div>
+				<input type="button" id="button0" value="0"/>
+				<input type="button" id="decimalbt" value="."/>	
+				<input type="button" id="evaluatebt" value="="/>	
+			</div>
+			
+			<input type="button" id="showbt" value="Show Stored Values"/>
 		</div>
     </body>
 </html>
