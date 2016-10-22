@@ -1,0 +1,248 @@
+<html>
+    <head>
+	<script src="jquery-3.1.1.js"></script>
+	<script>
+	var operandstack = [];
+	var operatorstack = [];
+	var operatorpriority = {add:1, subtract:1, multiply:2,divide:2,exp:3};
+	var currentvalue = "";
+	var operatorentered = true;	
+	
+	window.onload = function(){
+ 	
+		function SaveValue(val)
+		{
+			var storedvalues = window.sessionStorage.getItem("StoredValues")
+			if(storedvalues)
+			{
+				storedvalues = window.sessionStorage.getItem("StoredValues").split(",");
+				storedvalues.push(val);
+				if(storedvalues.length>10)
+				{
+					storedvalues.shift()
+				}
+				window.sessionStorage.setItem("StoredValues",storedvalues.toString());
+			}
+			else
+			{
+				storedvalues = [val];
+				window.sessionStorage.setItem("StoredValues",storedvalues.toString());
+			}
+		}
+	
+		for(var i = 0;i<10;i++)
+		{
+			HandleButtonClicks(i);			
+		}		
+		
+		document.getElementById("decimalbt").onclick = function(){
+			document.getElementById("valuetext").value += ".";
+			currentvalue+=".";
+			operatorentered = false;
+		}
+		
+		function HandleButtonClicks(i)
+		{
+			document.getElementById("button"+i).onclick = function(){
+			document.getElementById("valuetext").value += i;
+			currentvalue+=i;
+			operatorentered = false;
+			}
+		}
+		
+		document.getElementById("addbt").onclick = function(){
+			if(!operatorentered)
+			{
+				document.getElementById("valuetext").value += document.getElementById("addbt").value;
+				operandstack.push(parseFloat(currentvalue));
+				
+				if(operatorstack.length>0)
+				{
+					if(operatorpriority[operatorstack[operatorstack.length-1]]>operatorpriority["add"])
+					{
+						var op1 = operandstack.pop();
+						var op2 = operandstack.pop();
+						var operator = operatorstack.pop();
+						operandstack.push(Evaluate(op2,op1,operator));
+					}	
+				}
+				operatorstack.push("add");
+				currentvalue = "";
+				operatorentered = true;
+			}
+		}	
+		document.getElementById("subtractbt").onclick = function(){
+			if(!operatorentered)
+			{
+				document.getElementById("valuetext").value += document.getElementById("subtractbt").value;
+				operandstack.push(parseFloat(currentvalue));
+				
+				if(operatorstack.length>0)
+				{
+					if(operatorpriority[operatorstack[operatorstack.length-1]]>operatorpriority["subtract"])
+					{
+						var op1 = operandstack.pop();
+						var op2 = operandstack.pop();
+						var operator = operatorstack.pop();
+						operandstack.push(Evaluate(op2,op1,operator));
+					}	
+				}
+				operatorstack.push("subtract");
+				currentvalue = "";
+				operatorentered = true;
+			}
+		}		
+		document.getElementById("multiplybt").onclick = function(){
+			if(!operatorentered)
+			{
+				document.getElementById("valuetext").value += document.getElementById("multiplybt").value;
+				operandstack.push(parseFloat(currentvalue));
+				
+				if(operatorstack.length>0)
+				{
+					if(operatorpriority[operatorstack[operatorstack.length-1]]>operatorpriority["multiply"])
+					{
+						var op1 = operandstack.pop();
+						var op2 = operandstack.pop();
+						var operator = operatorstack.pop();
+						operandstack.push(Evaluate(op2,op1,operator));
+					}	
+				}
+				operatorstack.push("multiply");
+				currentvalue = "";
+				operatorentered = true;
+			}
+		}	
+		document.getElementById("dividebt").onclick = function(){
+			if(!operatorentered)
+			{
+				document.getElementById("valuetext").value += document.getElementById("dividebt").value;
+				operandstack.push(parseFloat(currentvalue));
+				
+				if(operatorstack.length>0)
+				{
+					if(operatorpriority[operatorstack[operatorstack.length-1]]>operatorpriority["divide"])
+					{
+						var op1 = operandstack.pop();
+						var op2 = operandstack.pop();
+						var operator = operatorstack.pop();
+						operandstack.push(Evaluate(op2,op1,operator));
+					}	
+				}
+				operatorstack.push("divide");
+				currentvalue = "";
+				operatorentered = true;
+			}
+		}	
+		document.getElementById("expbt").onclick = function(){
+			if(!operatorentered)
+			{
+				document.getElementById("valuetext").value += document.getElementById("expbt").value;
+				operandstack.push(parseFloat(currentvalue));
+				
+				if(operatorstack.length>0)
+				{
+					if(operatorpriority[operatorstack[operatorstack.length-1]]>operatorpriority["exp"])
+					{
+						var op1 = operandstack.pop();
+						var op2 = operandstack.pop();
+						var operator = operatorstack.pop();
+						operandstack.push(Evaluate(op2,op1,operator));
+					}	
+				}
+				operatorstack.push("exp");
+				currentvalue = "";
+				operatorentered = true;
+			}
+		}	
+		document.getElementById("sqrtbt").onclick = function(){
+			if(!operatorentered)
+			{
+				document.getElementById("valuetext").value += "^0.5";
+				
+				operandstack.push(parseFloat(currentvalue));				
+				
+				var op1 = operandstack.pop();
+				var res = Evaluate(op1,0.5,"exp");
+				
+				currentvalue = res;
+				operatorentered = false;
+			}
+		}
+		
+	
+		
+		function Evaluate(a,b,operator)
+		{
+			switch(operator)
+			{
+			case "add":
+				return a+b;
+			case "subtract":
+				return a-b;			
+			case "multiply":
+				return a*b;
+			case "divide":
+				return a/b;	
+			case "exp":
+				return Math.pow(a,b);
+			}				
+		}
+		
+		
+			document.getElementById("clearbt").onclick = function(){
+				operandstack = [];
+				operandstack = [];
+				currentvalue = "";
+				operatorentered = true;
+			}
+			
+			document.getElementById("evaluatebt").onclick = function(){
+				operandstack.push(parseFloat(currentvalue));
+				while(operatorstack.length>0)
+				{
+					var op1 = operandstack.pop();
+					var op2 = operandstack.pop();
+					var operator = operatorstack.pop();
+					operandstack.push(Evaluate(op2,op1,operator));
+				}
+				document.getElementById("valuetext").value = operandstack.pop();
+				currentvalue = document.getElementById("valuetext").value;		
+				SaveValue(currentvalue)				
+			}
+			
+			document.getElementById("showbt").onclick = function(){
+				var storedvalues = window.sessionStorage.getItem("StoredValues").split(",");
+				alert("Total values stored "+storedvalues.length + ": " + storedvalues);
+			}			
+	}
+	
+	</script>
+    </head>
+    <body>
+        <h1>Calculator</h1>
+		<input type="button" id="showbt" value="Show Stored Values"/>
+		<div><input type="text" id="valuetext" /></div>
+		<input type="button" id="button0" value="0"/>
+		<input type="button" id="decimalbt" value="."/>		
+		<input type="button" id="evaluatebt" value="="/>		
+		<input type="button" id="clearbt" value="CE"/>	
+		<div><input type="button" id="button1" value="1"/>	
+		<input type="button" id="button2" value="2"/>	
+		<input type="button" id="button3" value="3"/></div>		
+		<div><input type="button" id="button4" value="4"/>	
+		<input type="button" id="button5" value="5"/>	
+		<input type="button" id="button6" value="6"/></div>		
+		<div><input type="button" id="button7" value="7"/>
+		<input type="button" id="button8" value="8"/>	
+		<input type="button" id="button9" value="9"/></div>	
+		<div>
+		<input type="button" id="addbt" value="+"/>
+		<input type="button" id="subtractbt" value="-"/>
+		<input type="button" id="multiplybt" value="*"/>
+		<input type="button" id="dividebt" value="/"/>
+		<input type="button" id="expbt" value="^"/>
+		<input type="button" id="sqrtbt" value="sqrt"/>
+		</div>
+    </body>
+</html>
