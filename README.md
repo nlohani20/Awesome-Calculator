@@ -10,3 +10,6 @@ You are to build a browser based calculator with the following requirements:
 
 The implementation I made stores the values when the "=" button is pressed. Exponentiation is basically operand ^ power and the sqrt button is applied to the previous operand entered and is internally translated to operand ^ 0.5 which is the same thing.
 The values stored are per window/tab and survive refresh/cookie clear but not the closing of the window/tab.
+
+# Requirements
+An Internet Browser
