@@ -1,4 +1,4 @@
-# Awesome-Calculator
+# Awesome-Calculator using pure HTML
 You are to build a browser based calculator with the following requirements:
 
 1. The calculator must support at least the following operations: +, -, *(multiplication), /, **(exponentiation), sqrt
@@ -12,4 +12,5 @@ The implementation I made stores the values when the "=" button is pressed. Expo
 The values stored are per window/tab and survive refresh/cookie clear but not the closing of the window/tab.
 
 # Requirements
+Knowldge of little bit HTML
 An Internet Browser
